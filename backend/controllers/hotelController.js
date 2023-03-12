@@ -3,6 +3,8 @@ const ErrorHandler = require('../utils/errorHandler')
 
 // creating a new hotel => /api/hotels/new
 module.exports.newHotel = async (req,res)=>{
+    console.log('req.user.id', req.user)
+    req.body.user = req.user._id
     const newHotell = await Hotel.create(req.body)
 // 201 is the created status
     res.status(201).json({
@@ -15,6 +17,7 @@ module.exports.newHotel = async (req,res)=>{
 //get all hotels =>/api/hotels
 module.exports.gethotel=async(req,res)=>{
 
+    console.log('insidegethotel')
     const allhotel = await Hotel.find()
     res.status(200).json({
         succes: true,

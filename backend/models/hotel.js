@@ -37,6 +37,11 @@ const hotelSchema = new mongoose.Schema({
         type:[String],
 
     },
+    user:{
+        type: mongoose.Schema.ObjectId,
+        ref:'User',
+        required:true
+    },
     cheapestPrice:{
         type: Number,
         required: true
