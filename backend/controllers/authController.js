@@ -2,7 +2,11 @@ const User = require('../models/user')
 const bcrypt= require('bcryptjs')
 const ErrorHandler = require('../utils/errorHandler')
 const jwt = require('jsonwebtoken')
+const crypto = require('crypto');//this the default package and do not need to install
 require('dotenv').config({path:'../.env'})
+const nodemailer = require('nodemailer')
+require('dotenv').config({path:'../.env'})
+
 
 //register is actually the create
 // register a user => api/register
@@ -227,6 +231,118 @@ module.exports.updateProfile = async(req,res,next)=>{
         success:true,
         updatedProfile
     })
+}
+
+//forgot password
+module.exports.forgotPassword = async(req,res,next)=>{
+
+    const user = await User.findOne({email: req.body.email})
+
+    if(!user){
+        return next(new ErrorHandler('User Not Found', 404))
+    }
+    //genereate forgot password token
+    const forgotPasswordToken = crypto.randomBytes(20).toString('hex');
+    //hash forgot password token
+    const hashedtoken = crypto.createHash('sha256').update(forgotPasswordToken).digest('hex')
+
+    //token expires time i.e for 30 min
+    const expires = Date.now() + 30 * 60* 1000
+
+    //now we need to store this token and expiring time in database
+    user.resetPasswordToken = hashedtoken;
+    user.resetPasswordExpires = expires
+
+    await user.save()
+
+    //create reset password url
+    //req.protocol checks whether it is http or https
+    //req.get('host') is a localhost:4000 in local case
+    const resetUrl = `http://localhost:4000/api/resetpassword/${hashedtoken}`
+
+    const message = `Your password reset token is as follow:\n\n ${resetUrl}\n\n If you have not requresed this email, then ignore it`
+
+    // try{
+
+    //     await sendEmail({
+    //         email: user.email,
+    //         subject: 'Password recovery',
+    //         message
+    //     })
+    //     res.status(200).json({
+    //         success:true,
+    //         message: `Email sent to ${user.email}`
+    //     })
+
+    // }catch(error){
+    //     user.resetPasswordToken = undefined;
+    //     user.resetPasswordExpires =undefined;
+    //     await user.save()
+
+    //     return next(new ErrorHandler(error,500))
+    // }
+
+    const transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+          user: process.env.EMAIL,
+          pass: process.env.PASSWORD
+        }
+      });
+    
+      const mailOptions = {
+        from: process.env.EMAIL,
+        // later to should be changed to user.email
+        to: 'kalyanad100@gmail.com',
+        subject: 'Reset your password',
+        text: `Please click the following link to reset your password: http://localhost:3000/reset-password?token=${hashedtoken}`
+      };
+    
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.log(error);
+          res.status(500).json({ message: 'Unable to send email' });
+        } else {
+          console.log(`Email sent to ${user.email}: ${info.response}`);
+          res.json({ message: 'An email has been sent to your email address with instructions on how to reset your password.' });
+        }
+      });
+    
+}
+
+
+//reset password => api/resetpassword/:token
+
+module.exports.resetPassword = async (req,res,next)=>{
+
+    const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
+
+    const user = await User.findOne({
+        resetPasswordToken,
+        resetPasswordExpires: {$gt: Date.now()} // gt means greater than
+
+    })
+
+    if(!user){
+        return next(new ErrorHandler('password reset token is invalid or has been expired',400))
+    }
+
+    if(req.body.password !== req.body.confirmPassword){
+        return next(new ErrorHandler('password did not match', 400))
+    }
+
+    //setup new password
+    user.password = req.body.password
+    user.resetPasswordToken = hashedtoken;
+    user.resetPasswordExpires = expires
+
+    await user.save()
+
+    res.status(200).json({
+        success:true,
+        message: 'password reset sucessful'
+    })
+
 }
 
 
