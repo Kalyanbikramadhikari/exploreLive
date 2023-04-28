@@ -1,0 +1,19 @@
+/* .home{
+    height: 600px;
+    width: 100%;
+    object-fit: contain;
+    background-image: url('images/backimg.jpg');
+} */
+
+/* search box */
+.search{
+    display: flex;
+    /* align-items: center; */
+    justify-content: center;
+    margin-top: 372px;
+
+}
+.App{
+    
+}
+/* checkout page css starts */
