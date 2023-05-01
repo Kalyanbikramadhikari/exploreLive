@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 const HomeStayByCity = () => {
   return (
@@ -6,10 +7,13 @@ const HomeStayByCity = () => {
         <h4>Explore By city</h4>
         {/* flex-wrap */}
         <div className='flex space-x-7 '>
+            <Link to="/singlehomestay">
             <div className='flex flex-col relative'>
+                
                 <img className='h-48 w-80 object-cover' src="images/ktm.jpg" alt="" />
                 <span className='absolute bottom-3 left-3 bg-gray-300 px-2 rounded-xl'>Kathmandu</span>
             </div>
+            </Link>
             <div className='flex flex-col relative'>
                 <img className='h-48 w-80 object-cover' src="images/bkt.jpg" alt="" />
                 <span className='absolute bottom-3 left-3 bg-gray-300 px-2 rounded-xl'>Bhaktapur</span>

@@ -1,11 +1,36 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from './Navbar'
 import DryCleaningIcon from '@mui/icons-material/DryCleaning';
 import IronIcon from '@mui/icons-material/Iron';
 import BedroomBabyIcon from '@mui/icons-material/BedroomBaby';
 import BedroomParentIcon from '@mui/icons-material/BedroomParent';
+import { Link } from 'react-router-dom';
 
 const SingleHomeStay = () => {
+    const [guest,setguest] = useState(1)
+    const [days, setDays] = useState(1)
+    const guestHandler =()=>{
+        setguest(guest + 1)
+        console.log('guest', guest)
+    }
+    const decrementHandler = ()=>{
+        if (guest>1) {
+            setguest(guest - 1)
+            
+        }
+    }
+
+    const daysIncrementHandler =()=>{
+        setDays(days+1)
+    }
+    const daysDecrementHandler = ()=>{
+        if (days>1) {
+            setDays(days - 1)
+            
+        }
+    }
+
+
   return (
     <div className=''>
         <div >
@@ -29,10 +54,11 @@ const SingleHomeStay = () => {
                         <span className='text-lg font-semibold text-gray-600'>Guests:</span>
 
                         <div className='bg-gray-100 flex p-1 space-x-3'>
-                            <span className='text-xl'>1</span>
+                            <span className='text-xl'>{guest}</span>
                             <div className='flex flex-col'>
-                                <i class="fa-solid fa-chevron-up"></i>
-                                <i class="fa-solid fa-chevron-down"></i>
+                                <button onClick={guestHandler}> <i class="fa-solid fa-chevron-up"></i></button>
+                               <button onClick={decrementHandler}> <i class="fa-solid fa-chevron-down"></i></button>
+                               
                             </div>
 
                         </div>
@@ -40,10 +66,13 @@ const SingleHomeStay = () => {
                     <div className='flex space-x-3 items-center'>
                         <span className='text-lg font-semibold text-gray-600'>Days:</span>
                         <div className='bg-gray-100 flex space-x-3 p-1 '>
-                            <span className='text-xl '>1</span>
+                            <span className='text-xl '>{days}</span>
                             <div className='flex flex-col'>
-                                <i class="fa-solid fa-chevron-up"></i>
-                                <i class="fa-solid fa-chevron-down"></i>
+                                <button onClick={daysIncrementHandler}><i class="fa-solid fa-chevron-up"></i></button>
+                                <button onClick={daysDecrementHandler}><i class="fa-solid fa-chevron-down"></i></button>
+
+                                
+                                
                             </div>
 
 
@@ -52,8 +81,9 @@ const SingleHomeStay = () => {
                 </div>
                 
                 <div className='flex justify-center'>
+                 <Link to ="/bookstay">
                  <button className='p-2 px-6 mt-10 flex content-center rounded-md text-white bg-cyan-600' type="button">Book Now </button>
-
+                 </Link>
                 </div>
 
             </div>

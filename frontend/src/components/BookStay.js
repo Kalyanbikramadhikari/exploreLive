@@ -1,7 +1,73 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from './Navbar'
+import { Link } from 'react-router-dom'
 
 const BookStay = () => {
+    const [culturalsiteprice, setCulturalSitePrice] = useState()
+    const [hikingprice, sethikingprice] = useState()
+    const [waterfall, setwaterfall] = useState()
+
+    
+
+
+    const handleCheckBox1 = (e)=>{
+
+        const value = e.target.value
+        const checked = e.target.checked
+        console.log('value,checked', value,checked)
+
+        if(checked){
+            setCulturalSitePrice([15])
+            // console.log('value', value)
+            // console.log('culturalsiteprice', culturalsiteprice)// notice here that the function call is being called first so this statement is not shown instead setculturalprice is shown to 0.
+
+        }else{
+            setCulturalSitePrice([''])
+            // console.log('culturalsiteprice', culturalsiteprice)
+        }
+
+
+    }
+    const handleCheckBox2 = (e)=>{
+
+        const value = e.target.value
+        const checked = e.target.checked
+        // console.log('value,checked', value,checked)
+
+        if(checked){
+            sethikingprice([value])
+            // console.log('value', value)
+            // console.log('culturalsiteprice', culturalsiteprice)// notice here that the function call is being called first so this statement is not shown instead setculturalprice is shown to 0.
+
+        }else{
+            sethikingprice([''])
+            // console.log('culturalsiteprice', culturalsiteprice)
+        }
+
+
+    }
+    const handleCheckBox3 = (e)=>{
+
+        const value = e.target.value
+        const checked = e.target.checked
+        // console.log('value,checked', value,checked)
+
+        if(checked){
+            setwaterfall([8])
+            // console.log('value', value)
+            // console.log('culturalsiteprice', culturalsiteprice)// notice here that the function call is being called first so this statement is not shown instead setculturalprice is shown to 0.
+
+        }else{
+            setwaterfall([''])
+            // console.log('culturalsiteprice', culturalsiteprice)
+        }
+
+
+    }
+   
+    // 
+    console.log('waterfall', waterfall)
+
   return (
     <div className=''>
         <div className=''>
@@ -35,6 +101,48 @@ const BookStay = () => {
                 </div>
                 <div className='px-4'>
                     <span className='text-lg font-bold'>Price Details</span>
+                    {
+                        culturalsiteprice & culturalsiteprice!== '' ? 
+                        <div className='flex w-full justify-between'>
+                            <span className='text-base font-semibold text-gray-600'>Cultural Site Visit:</span>
+                            <span className='text-base font-semibold '>${culturalsiteprice}</span>
+                        </div>
+                        
+                            
+                        :
+                        <div></div> 
+                        
+                    }
+
+                    
+                    
+                    {
+                        hikingprice & hikingprice!== '' ? 
+                        <div className='flex w-full justify-between'>
+                            <span className='text-base font-semibold text-gray-600'>Hiking:</span>
+                            <span className='text-base font-semibold '>${hikingprice}</span>
+                        </div>
+                        
+                            
+                        :
+                        <div></div> 
+                        
+                    }
+                    {
+                        waterfall ? 
+                        <div className='flex w-full justify-between'>
+                            <span className='text-base font-semibold text-gray-600'>Water fall visit:</span>
+                            <span className='text-base font-semibold '>${waterfall}</span>
+                        </div>
+                        
+                            
+                        :
+                        <div></div> 
+                        
+                    }
+                    
+                    
+                    
                     <div className='flex w-full justify-between'>
                         <span className='text-base font-semibold text-gray-600'>Home Stay:</span>
                         <span className='text-base font-semibold '>$121</span>
@@ -42,15 +150,16 @@ const BookStay = () => {
 
                     <div className='flex w-full justify-between'>
                         <span className='text-base font-semibold '>Total Price:</span>
-                        <span className='text-base font-semibold '>$121</span>
+                        <span className='text-base font-semibold '></span>
                     </div>
 
                 </div>
 
                 
                 <div className='flex justify-center'>
+                    <Link to ="/checkout">
                  <button className='p-2 px-6 mt-10 flex content-center rounded-md text-white bg-cyan-600' type="button">Proceed To Checkout</button>
-
+                 </Link>
                 </div>
 
             </div>
@@ -61,24 +170,24 @@ const BookStay = () => {
                     <span className='font-semibold text-2xl '>Additional Services</span>
 
                     <div className="flex justify-between border border-black rounded-md p-2 pr-20">
-                        <input type="radio" />
+                        <input type="checkbox" value='15' onClick={handleCheckBox1}/>
                         <span className='text-base font-semibold text-gray-600'>Cultural Site Visit</span>
                         <span>$15(per group)</span>
                         <span>$15</span>
 
                     </div>
                     <div className="flex justify-between border border-black rounded-md p-2 pr-20">
-                        <input type="radio" />
+                        <input type="checkbox" value={25} onClick={handleCheckBox2} />
                         <span className='text-base font-semibold text-gray-600'>Hiking</span>
-                        <span>$15(per group)</span>
-                        <span>$15</span>
+                        <span>$25(per group)</span>
+                        <span>$25</span>
 
                     </div>
                     <div className="flex justify-between border border-black rounded-md p-2 pr-20">
-                        <input type="radio" />
+                        <input type="checkbox" value='8' onClick={handleCheckBox3} />
                         <span className='text-base font-semibold text-gray-600'>Waterfall Visit</span>
-                        <span>$15(per group)</span>
-                        <span>$15</span>
+                        <span>$8(per group)</span>
+                        <span>$8</span>
 
                     </div>
                 </div>

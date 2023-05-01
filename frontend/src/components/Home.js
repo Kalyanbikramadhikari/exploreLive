@@ -2,6 +2,7 @@ import React from 'react'
 import Navbar from './Navbar'
 import SearchBar from './SearchBar'
 import HomeStayByCity from './HomeStayByCity'
+import { Link } from 'react-router-dom'
 
 
 const Home = () => {
