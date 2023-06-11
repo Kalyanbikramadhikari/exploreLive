@@ -6,26 +6,123 @@ const crypto = require('crypto');//this the default package and do not need to i
 require('dotenv').config({path:'../.env'})
 const nodemailer = require('nodemailer')
 require('dotenv').config({path:'../.env'})
+const cloudinary = require('cloudinary').v2
+const multer = require('multer');
+const upload = multer().none(); // Configure multer to handle multipart/form-data
+const fs = require('fs');
+
+
+
+  
+  
+  
+  
+  
 
 
 //register is actually the create
 // register a user => api/register
-module.exports.register = async(req,res,next)=>{
+// module.exports.register = async (req, res, next) => {
+//     console.log('into register section');
+//     console.log(req.body.email, req.body.username, req.body.password);
+  
+//     // Handle the uploaded file using the "upload" middleware
+//     upload.single('image')(req, res, (err) => {
+//       if (err) {
+//         console.error('Error:', err);
+//         // Handle errors here
+//         return res.status(500).json({ success: false, message: 'File upload error' });
+//       }
+  
+//       // Access the uploaded file using req.file
+//       const uploadedFile = req.file;
+//       console.log('uploaded file:', uploadedFile);
+  
+//       const salt = bcrypt.genSaltSync(10);
+//       const hash = bcrypt.hashSync(req.body.password, salt);
+  
+//       // Process the rest of the registration logic...
+//     //   const result =await cloudinary.uploader.upload(req.body.image,{
+//         //     //     folder:'users',
+//         //     //     width: 150,
+//         //     //     crop:"scale"
+        
+//         //     // }).then(result => {
+//         //     //     console.log('result', result);
+//         //     //     // Handle the result here
+//         //     //   })
+//         //     //   .catch(error => {
+//         //     //     console.error('Error:', error);
+//         //     //     // Handle errors here
+//         //     //   });
+//         //     // console.log('result', result)  
+        
+//         //     // const newUser = await User.create({
+//         //     //     username:req.body.username,
+//         //     //     email: req.body.email,
+//         //     //     password:hash,
+//         //     //     image:{
+//         //     //         public_id: result.public_id,
+//         //     //         url: result.secure_url
+  
+//       res.status(201).json({
+//         success: true,
+//         // newUser
+//       });
+//     });
+//   };
+module.exports.register = async (req, res, next) => {
+    // console.log(req.file)
+    // const buffer = fs.readFileSync(req.file.path);
+
+      const {username,email,password} = req.body
+      console.log('into register section');
+    //   console.log(req.body)
+    // const result = await cloudinary.uploader.upload(image,{
+    //     folder: 'avatars',
+    //     // width:500,
+    //     // crop:"scale"
+    // })
+    //   console.log(req.body.email, req.body.username, req.body.password);
     
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(req.body.password, salt);
-  
-    const newUser = await User.create({
-        username:req.body.username,
-        email: req.body.email,
-        password:hash
-        // password: req.body.password
-    })
+    
+    // const result =await cloudinary.uploader.upload(req.body.image,{
+    //     folder:'users',
+    //     width: 150,
+    //     crop:"scale"
+
+    // }).then(result => {
+    //     console.log('result', result);
+    //     // Handle the result here
+    //   })
+    //   .catch(error => {
+    //     console.error('Error:', error);
+    //     // Handle errors here
+    //   });
+    // console.log('result', result)  
+
+    try {
+        const newUser = await User.create({
+          username,
+          email,        
+          password: hash,
+        //   image: buffer
+        });
+      
+        // Handle the successful creation of the new user
+        console.log('New user created:', newUser);
+      } catch (error) {
+        // Handle the error that occurred during user creation
+        console.error('Error creating a new user:', error);
+      }
     res.status(201).json({
         success: true,
-        newUser
-    })
-}
+        // newUser
+      });
+    // });
+  };
 
 //READ operation
 //get all users(by admin)=>api/admin/users

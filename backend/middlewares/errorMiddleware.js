@@ -14,7 +14,7 @@ module.exports = (err, req, res, next)=>{
     
     
     if(process.env.NODE_ENV =='DEVELOPMENT '){
-       console.log('helool')
+       console.log('from error Middleware process.env.node_env')
         res.status(err.statusCode).json({
             success: false,
             error: err,

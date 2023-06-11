@@ -6,6 +6,7 @@ const User = require('../models/user')
 const ErrorHandler = require("../utils/errorHandler")
 const jwt = require('jsonwebtoken')
 module.exports.isAuthenticated = async(req,res,next)=>{
+    console.log('into authentication')
 
     const token = req.cookies.access_token
     // console.log('token', token)
@@ -22,5 +23,6 @@ module.exports.isAuthenticated = async(req,res,next)=>{
         next(new ErrorHandler('Invalid token',403))
     }
     req.user = await User.findById(verified.id)
+    console.log(req.user)
     next()
 }

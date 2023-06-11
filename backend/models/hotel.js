@@ -7,7 +7,7 @@ const hotelSchema = new mongoose.Schema({
     },
     type:{
         type:String,
-        required: true
+        // required: true
     },
     city:{
         type:String,
@@ -40,7 +40,7 @@ const hotelSchema = new mongoose.Schema({
     user:{
         type: mongoose.Schema.ObjectId,
         ref:'User',
-        required:true
+        // required:true
     },
     cheapestPrice:{
         type: Number,

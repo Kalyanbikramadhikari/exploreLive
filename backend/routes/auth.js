@@ -1,5 +1,22 @@
 const express = require('express');
 const router = express.Router();
+// const multer = require('multer')
+
+// // const multer = require('multer')
+// // const rac = require('../public/')
+// const path = require('path')
+
+// const storage = multer.diskStorage({
+//     destination:(req,file,cb)=>{
+//         cb(null,'./backend/public/images')
+//     },
+//     filename : (req, file, cb)=>{
+//         console.log(file)
+//         cb(null, Date.now() + path.extname(file.originalname))
+//     }
+// })
+
+// const upload = multer({storage:storage})
 
 const {register, login, logout, getUserProfile, updatePassword, updateProfile, getAllUsers, getOneUser, forgotPassword, resetPassword} = require('../controllers/authController');
 const { isAuthenticated } = require('../middlewares/checkAuthentication');
