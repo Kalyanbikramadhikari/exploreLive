@@ -20,9 +20,14 @@ const router = express.Router();
 
 const {register, login, logout, getUserProfile, updatePassword, updateProfile, getAllUsers, getOneUser, forgotPassword, resetPassword} = require('../controllers/authController');
 const { isAuthenticated } = require('../middlewares/checkAuthentication');
+const upload = require('../middlewares/multerMiddleware')
+// console.log(
+    
+//     'upload',upload)
 
+// router.route('/register').post(register)
+router.route('/register').post(upload.single('image'),register)
 
-router.route('/register').post(register)
 router.route('/admin/users').get(isAuthenticated, getAllUsers)
 router.route('/admin/users/:id')
                         .get(isAuthenticated, getOneUser)

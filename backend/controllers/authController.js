@@ -72,17 +72,17 @@ const fs = require('fs');
 //     });
 //   };
 module.exports.register = async (req, res, next) => {
-    // console.log(req.file)
+    console.log('file',req.file)
     // const buffer = fs.readFileSync(req.file.path);
 
-      const {username,email,password} = req.body
+      const {username,email,password,} = req.body
       console.log('into register section');
     //   console.log(req.body)
-    // const result = await cloudinary.uploader.upload(image,{
-    //     folder: 'avatars',
-    //     // width:500,
-    //     // crop:"scale"
-    // })
+    const result = await cloudinary.uploader.upload(req.file.path,{
+        folder: 'avatars',
+        // width:500,
+        // crop:"scale"
+    })
     //   console.log(req.body.email, req.body.username, req.body.password);
     
     const salt = bcrypt.genSaltSync(10);
@@ -108,19 +108,20 @@ module.exports.register = async (req, res, next) => {
           username,
           email,        
           password: hash,
-        //   image: buffer
+          image: result.secure_url 
         });
       
         // Handle the successful creation of the new user
         console.log('New user created:', newUser);
+        res.status(201).json({
+            success: true,
+            newUser 
+          });
       } catch (error) {
         // Handle the error that occurred during user creation
-        console.error('Error creating a new user:', error);
+        console.error('Error while creating a new user:', error);
       }
-    res.status(201).json({
-        success: true,
-        // newUser
-      });
+    
     // });
   };
 
