@@ -73,15 +73,16 @@ export const homeStayApi = createApi({
     }),
     register: builder.mutation({
       query:(data)=> {
-        console.log('data',data)
-        
+        for (const [key, value] of data.entries()) {
+          console.log(key, value);
+        }        
         return{
           url: '/register', 
           method: 'POST',
           body: data,
           headers:{
-            'Content-type':'application/json;charset=UTF-8',
-            // 'Content-type':'multipart/form-data'
+            // 'Content-type':'application/json;charset=UTF-8',
+            'Content-type':'multipart/form-data'
 
           }
         }

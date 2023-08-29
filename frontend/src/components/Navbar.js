@@ -61,7 +61,7 @@ const Navbar = ({isHomePage=true}) => {
                 <Link to="/">
                   <button className='p-2 px-8 mt-1 bg-amber-400 text-sm' onClick={logoutHandler}>Logout</button>
                 </Link>
-              </div>
+              </div>:
                   
               
               <div onMouseEnter={() => setIsDropdownOpen(true)}

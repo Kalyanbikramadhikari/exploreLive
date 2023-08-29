@@ -10,7 +10,6 @@ const auth = require('./routes/auth')
 const payment = require('./routes/payment')
 const errorMiddleware = require('./middlewares/errorMiddleware');
 const bookings = require('./routes/bookings')
-
 //middlewares
 // const corsOptions ={
 //     origin:'*', 

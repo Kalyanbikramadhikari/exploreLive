@@ -74,6 +74,7 @@ const fs = require('fs');
 module.exports.register = async (req, res, next) => {
     console.log('file',req.file)
     // const buffer = fs.readFileSync(req.file.path);
+    console.log('req.body',req.body)
 
       const {username,email,password,} = req.body
       console.log('into register section');
@@ -116,7 +117,7 @@ module.exports.register = async (req, res, next) => {
         res.status(201).json({
             success: true,
             newUser 
-          });
+          }); 
       } catch (error) {
         // Handle the error that occurred during user creation
         console.error('Error while creating a new user:', error);
@@ -310,7 +311,6 @@ exports.updatePassword = async(req,res,next)=>{
 module.exports.getUserProfile = async(req,res,next)=>{
 
     const user = await User.findById(req.user.id)
-
     res.status(200).json({
         sucess:true,
         user

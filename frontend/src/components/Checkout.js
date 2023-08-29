@@ -91,7 +91,7 @@ const Checkout = () => {
                     <div className=''>
                     <Link to="stripepayment">
                 {/* <button className='bg-blue-300'>Pay Now</button> */}
-                <img className='h-28 w-28 border-2 rounded-2xl cursor-pointer' src="images/paypal.png" alt="" />
+                <img className='h-28 w-28 border-2 rounded-2xl cursor-pointer' src="images/stripe.png" alt="" />
 
                 </Link>
                     </div>
@@ -147,7 +147,7 @@ const Checkout = () => {
                     </div>
                     <div className="flex space-x-5">
                         <span className='text-base font-semibold text-gray-400 '>Total Price:</span>
-                        <span className='text-base font-semibold text-gray-800'>Rs{homeStayData.total}</span>
+                        <span className='text-base font-semibold text-gray-800'>${homeStayData.total}</span>
                     </div>
                     {/* <div className="flex space-x-7">
                         <span className='text-base font-semibold text-gray-400 '>Email:</span>
